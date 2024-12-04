@@ -1,0 +1,30 @@
+//README: my implementation of the formatting is with custom counterNodes, not listItem and ::before pseudoElements, and I don't feel like figuring out the styling
+//so I'm just using the default styling for lists, and then adding custom styles for indentations
+//I'll let you figure out the styling for lists and pseudo elements. 
+
+.ProseMirror {
+  ol {
+    counter-reset: custom-counter;
+
+    > li {
+      counter-increment: custom-counter;
+
+      &::before {
+        content: counter(custom-counter) ".";
+        position: absolute;
+        left: 0em;
+        color: inherit;
+        width: var(--counterWidth, 0);
+      }
+    }
+
+    &[data-format-special="hanging"] 
+    > .li {
+      &::before {
+      width: [margin-left];
+      text-indent: 0;
+    }
+    }
+
+  }
+}

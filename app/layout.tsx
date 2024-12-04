@@ -2,6 +2,21 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+// Place this in your entry point file (e.g., main.tsx or _app.tsx)
+const originalConsoleError = console.error;
+console.error = (...args) => {
+  // Suppress specific Radix UI ref warnings
+  if (
+    args[0]?.includes?.("Accessing element.ref was removed in React 19") &&
+    (args[1]?.includes?.("at SlotClone") ||
+      args[1]?.includes?.("at Primitive") ||
+      args[1]?.includes?.("at SelectContent"))
+  ) {
+    return;
+  }
+  originalConsoleError.apply(console, args);
+};
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
